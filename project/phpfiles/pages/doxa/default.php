@@ -44,6 +44,7 @@
 	$cctpl -> set('menuleft',$menuleft);
 	$cctpl -> set('userid',$userid);
 	$cctpl -> set('token',$token);
+	$cctpl -> set('page_template_path',$page_template_path);
 
 	
 	//echo $page_content = $cctpl->fetch();		//echo tại file include

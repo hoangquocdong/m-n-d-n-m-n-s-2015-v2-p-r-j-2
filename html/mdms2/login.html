@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+  <link rel="stylesheet" href="css/style_login.css"/> 
+  <script src="js/jquery.js"></script>
+  <style>
+* {
+            -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+            -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+            -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+          /*  -webkit-user-select: none;                  prevent copy paste, to allow, change 'none' to 'text' */
+}
+html{
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+body {
+
+    background-image: url('img/bg.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+#login-form{
+width:300px;
+height: 464px;
+	background-image: url('img/login_bg.jpg');
+	border-radius:8px;
+	margin:auto;
+	opacity: 0.9;
+}
+
+.middle-vertical{
+
+	position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.full-bg{
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.login-input{
+	position: relative;
+	display:block; 
+	margin:auto; 
+	border-style: solid;
+	border-width:thin;
+	border-color:#dee1e2;
+	height:45px;
+	width:270px; 
+	border-radius:6px;
+
+}
+.login-btn{
+	position:relative; 
+	display: block; 
+	text-align:center; 
+	margin-top:30px; 
+	border-color:#0F5D99; 
+	background-color:#026DA8;
+}
+.logo {
+	height: 100px;
+	width: 200px;
+	background-image: url('img/logo.png');
+	background-size: 179px 45px;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 63px;
+	left: 60px;
+}
+.social {
+	height: 100px;
+	width: 200px;
+	background-image: url('img/login/social.png');
+	background-size: 194px 64px;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 372px;
+	left: 52px;
+}
+textarea:focus, input:focus{
+    outline: 0;   
+}
+</style>
+</head>
+<body>
+	<div id="login-form" class="full-bg middle-vertical">
+			<h2 style="text-align: center;color: rgb(20, 77, 121);">Meters Monitoring NPC</h2>
+			<div class="logo" style=""></div>
+			<div style="margin-top:130px; background-color:rgba(255, 255, 255, 0.7); background-image: url('img/login/input-icon.png');background-repeat:no-repeat; background-size: 78px 116px;background-position: 4px 0px;" class="login-input">
+				<input id="username" style="color:#104269; width: 150px; background-color:rgba(255, 255, 255, 0.7); position: absolute;left: 85px;top: 13px;font-size: 18px; font-family: ubuntu, helvetica, arial;font-weight: 300; border:none;" placeholder="User name">
+			</div>
+			<div style="margin-top:13px; background-color:rgba(255, 255, 255, 0.7); background-image: url('app/img/input-icon.png');background-repeat:no-repeat; background-size: 78px 116px;background-position: 4px -68px;" class="login-input">
+				<input id="password" type="password" style=" color:#104269; width: 150px; background-color:rgba(255, 255, 255, 0.7); position: absolute;left: 85px;top: 13px;font-size: 18px; border:none; " placeholder="********">
+			</div>
+			<div id="login_btn" style="" class="login-btn login-input">
+				<div >
+					<span style="display: block;position: absolute;	margin: 10px 110px;	color: white;font-size: 21px;" id="login_submit">Login</span>
+				</div>
+			</div>
+			<span style="display: block;position: absolute;	margin: 8px 100px;color: #949494;font-size: 13px;font-weight: 200;width: 200px;" >Quên mật khẩu? </span>
+
+<!--			<div class="social" style=""></div> !-->
+	</div>
+
+
+
+
+  <script>
+    $(document).ready(function() {
+
+    });
+	      
+	$('#login_submit').click(function() {
+		userlogin();  
+    });
+	  
+    $("#username").keyup(function(event) {
+        if (event.keyCode==13) {
+          userlogin();
+        }
+    });
+
+    $("#password").keyup(function(event) {
+        if (event.keyCode==13) {
+          userlogin();
+        }
+    });
+
+        function userlogin(){          
+          var user= $('#username').val(),
+          pass= $('#password').val();
+          $.post('http://mdms.npc.com.vn/mdms2015/apis/login.php',{username:user,password:pass}, function(data){
+			//alert(data);
+              if (data!=0){
+              	var obj = JSON.parse(data);
+              	var link = obj['link'];
+				localStorage.token=obj['token'];
+				localStorage.id=obj['id'];
+                window.location = 'index.html';  
+              } else {
+                alert('Đăng nhập thất bại');
+              }
+          });
+        }
+  </script>
+</body>
+</html>
