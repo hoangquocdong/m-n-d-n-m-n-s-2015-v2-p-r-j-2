@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>Platform</title>
+<head>
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+	<table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+            </tr>
+        </thead>
+ 		<tbody>
+ 			<tr>
+ 				<td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+ 			</tr>
+ 			<tr>
+ 				<td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+ 			</tr>
+ 			<tr>
+ 				<td>31</td><td>32</td><td>33</td><td>34</td><td>35</td>
+ 			</tr>
+ 		</tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+            </tr>
+        </tfoot>
+    </table>
+
+	<button class="submit">Click me</button>
+
+
+<script type="text/javascript" src="../js/jquery.js"></script>
+
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+<!--script type="text/javascript" src="../js/jquery.dataTables.min.js"></script-->
+<script type="text/javascript">
+	var dataa = null,datab = null;
+	$.ajax({
+            url:'http://mdms.npc.com.vn/mdms2015/apis/datatable.php',
+            type:"POST",
+            data:{},
+            success:function(data){
+            	dataa = data;
+            	var data = JSON.parse(data);
+                //console.log(data);
+                datab = data;
+
+             
+            },
+            error: function(e){
+                console.log('e '+e);
+            }
+        	
+        	
+        }); 
+
+
+	$(document).ready(function() {
+		var count = 0;
+		$.each($('tr'),function(index, value){
+			count = index;
+			$(this).find('td').each (function(indexx, val) {
+
+			  	console.log(count+'.'+indexx+' === '+$(this).html());
+			});                          
+		});
+		/*
+		alert('ready');
+	    $('#example').dataTable( {
+	        "ajax": "objects.txt",
+	        //"ajax": leu,
+	        "columns": [
+	            { "data": "name" },
+	            { "data": "position" },
+	            { "data": "office" },
+	            { "data": "extn" },
+	            { "data": "start_date" },
+	            { "data": "salary" }
+	        ]
+	    } );
+*/
+	} );
+</script>
+</body>
+</html>

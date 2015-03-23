@@ -1,0 +1,71 @@
+/*
+* Style cho trang 
+*/
+* {
+            -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+            -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+            -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+            -webkit-user-select: none;                 /* prevent copy paste, to allow, change 'none' to 'text' */
+
+}
+.main_menu { 
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	left: 8px;
+	top: 3px;
+	z-index: 100;
+	background-image: url('../css/main-icon.png');
+	background-repeat: no-repeat;
+	background-size: 257px 43px;
+	background-position: -220px 0px;
+}
+.main_menu_right { 
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	z-index: 100;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-size: 257px 43px;
+	background-position: -220px 0px;
+}
+.layer0-icon{
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	background-image: url('../css/main-icon.png');
+	background-repeat: no-repeat;
+	background-size: 160px 27px;
+}
+.layer0_text{
+	display: inline-block;
+	padding-bottom: 0px;
+}
+#layer0_div_tdn {
+	background-position: -84px 6px;
+}
+#layer0_div_tm {
+	background-position: -110px 6px;
+}
+#layer0_div_th {
+	background-position: -26px 6px;
+}
+#layer0_div_tal {
+	background-position: -2px 6px;
+}
+.layer0-danhmuc {
+	background-position: -26px 6px;
+}
+.main-title {
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: lighter;
+	color: #C8D7FF;
+	text-shadow: 0 1px 0 #272D39;
+	margin: 0;
+}

@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>iScroll demo: simple</title>
+<link rel="stylesheet" href="../css/style.css" media="all">
+<link rel="stylesheet" href="../css/index.css" media="all">
+<link rel="stylesheet" href="../css/toggle.css" media="all">
+<link rel="stylesheet" href="css/jquery-ui.css" media="all">
+<link rel="stylesheet" href="css/thongsodoluong.css" media="all">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+<script type="text/javascript" src="../js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/iscroll-lite.js"></script>
+<script type="text/javascript" src="../js/jquery.tap.js"></script>
+
+<script src="js/jquery-ui1103.js"></script>
+<style>*{overflow:hidden;}</style>
+</head>
+<body>
+	<div id="layer0" style="background-color:#e1e1e1; position:absolute; width:100%;top: 0px; bottom: 0px;">
+		<div>
+			<div class="bg"></div>
+			<div class="slmenu" style="height: 100%; display: block; -webkit-transition: all 0s ease; transition: all 0s ease; top: 0px;overflow-x: hidden;">
+			<ul >
+				<li><a id = "truyendocnhieu" href="javascript:"style="background: #F2FFC8; padding: 5px 0px 2px 10px;"><img src="img/logo.png"></img></a></li>
+			</ul>
+			<h3>Thao tác chương trình</h3>
+			<ul >
+				<li><a id = "back" href="javascript:"><div id="layer0_div_tal" class="layer0-icon"></div><div class = "layer0_text">Quay lại trang trước</div></a></li>
+				<li><a id = "forward" href="javascript:"><div id="layer0_div_tal" class="layer0-icon"></div><div class = "layer0_text">Tiến đến trang sau</div></a></li>
+				<li><a id = "turn_off" href="javascript:"><div id="layer0_div_tal" class="layer0-icon"></div><div class = "layer0_text">Thoát chương trình</div></a></li>
+			</ul >			
+			<h3>Thông số vận hành</h3>
+			<ul >
+				<li><a id = "van_hanh" href="index_current_meter.html"><div id="layer0_div_tm" class="layer0-icon"></div><div class = "layer0_text">Thông số mới nhất </div></a></li>
+				<li><a id = "phu_tai"  href=""><div id="layer0_div_tm" class="layer0-icon"></div><div class = "layer0_text">Thống kê phụ tải</div></a></li>
+			</ul>
+
+			<h3>Chỉ số chốt</h3>
+
+			<ul>
+				<li><a id = "chi_so_ngay"  href="index_day_current_meter.html"><div id="layer0_div_tm" class="layer0-icon"></div><div class = "layer0_text">Chốt chỉ số hàng ngày</div></a></li>
+				<li><a id = "chi_so_thang"  href="index_h1_meter.html"><div id="layer0_div_tm" class="layer0-icon"></div><div class = "layer0_text">Chốt chỉ số hàng tháng H1</div></a></li>
+			</ul>
+
+			</div>
+		</div>
+	</div>
+	<div id="layer1" class="object" style="">
+	<div id="header" class ="object" style="position:relative;">
+		<div id="btn_menu" class="main_menu"> </div>
+		<div class="main-title"> Meters Monitoring NPC</div>
+		<div id="btn_menu_right" class="main_menu_right"><i class="menu-icons fa fa-home"></i></div>
+	</div>
+
+<div id="wrapper" class ="">
+	<div id="scroller">
+		<ul id="toggle">
+			<li id="container-h1" >
+			</li>
+		</ul>	
+	</div>
+</div>
+
+<div id="footer" class =""><div class="main-title"> EVN NPC IT</span> </div></div>
+</div>
+<script type="text/javascript" src="js/index.action.js"></script>
+<script type="text/javascript" src="js/loading.jquery.js"></script>
+<script>
+
+//var name_meter = localStorage.current_meter_name;
+var meter_serial = localStorage.current_meter_serial;
+
+$(document).ready(function(){
+	default_chotchiso();
+});
+
+function default_chotchiso(){
+	var d = new Date();
+	var m = d.getMonth();
+	var y = d.getFullYear();
+	//alert (m+'/'+y);	
+	var thangnam = m+'/'+y;
+	//alert (thangnam);
+	var firstDay = new Date(y, m-1, 1);//0h ngay đau tiên cua thang
+	var firstDayTime = Date.parse(firstDay)/1000;
+	//alert (firstDay+'  ::  '+firstDayTime);
+	var lastDay = new Date(y, m, 1);//0h ngay dau tien cua thang sau
+	var lastDayTime = Date.parse(lastDay)/1000;
+	//alert (lastDay+'  ::  '+lastDayTime);
+	//alert (selectedDate);
+	chotchiso(thangnam, firstDayTime, lastDayTime);
+}
+function chotchiso(para0, para1,para2){
+	//alert ('chotchiso ngay '+para);
+	var hesonhan = $('#hesonhan').html();
+	var hesotonthatDZ = $('#hesotonthatDZ').html();
+	ajax_img_loading('img/loading_c.gif');
+	$.post("http://mdms.npc.com.vn/mobile/server/get_chotchisothang.php",{thangnam: para0, mocthoigiandau:para1, mocthoigiancuoi:para2, meter_serial: meter_serial , hesonhan: hesonhan, hesotonthatDZ: hesotonthatDZ},function(data){
+    $('#container-h1').html(data);
+
+	var 
+		first_date = '',
+		second_date = '';
+		only_date = '';
+	// **********************************Action when click Tab 4 show #chotchisothang ******************************************************************
+	var baocaothang=0;
+	var thangnam='';
+	var firstDayTime = 1;
+	var lastDayTime = 1;
+
+		$('.date-picker').datepicker( {
+					changeMonth: true,
+					changeYear: true,
+					showButtonPanel: true,
+					dateFormat: 'MM yy',
+					onClose: function(dateText, inst) { 
+					//	alert ('here');
+						var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+						var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+						$(this).datepicker('setDate', new Date(year, month, 1));					
+						baocaothang = parseInt(month)+1;
+						var nambaocao = parseInt(year);
+						thangnam = baocaothang+'/'+year;
+						var firstDay = new Date(nambaocao, baocaothang-1, 1);//0h ngay đau tiên cua thang
+						firstDayTime = Date.parse(firstDay)/1000;
+						var lastDay = new Date(nambaocao, baocaothang, 1);//0h ngay dau tien cua thang sau
+						lastDayTime = Date.parse(lastDay)/1000;
+						chotchiso(thangnam, firstDayTime, lastDayTime);
+					},
+					beforeShow : function(input, inst) {
+						if ((datestr = $(this).val()).length > 0) {
+							year = datestr.substring(datestr.length-4, datestr.length);
+							month = jQuery.inArray(datestr.substring(0, datestr.length-5), $(this).datepicker('option', 'monthNames'));
+							$(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
+							$(this).datepicker('setDate', new Date(year, month, 1));
+							
+						}
+					}
+				});
+	remove_ajax_img_loading(100);
+//******************************** Type of date: From To; Only date; Only Month*********************************************************
+  	});
+}
+</script>
+</body>
+</html>

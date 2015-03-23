@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>Platform</title>
+
+<body>
+<div id="container" style="width: 100%; height: 100%; position: relative; overflow-x: hidden;">
+	<ul class="list_pwc">
+		<li class="list_sub"><input type="checkbox"><span class="pwcname">pwcname</span>
+			<ul class="pwcname">
+				<li class="name_sub"><input type="checkbox">namesub</li>
+				<li class="name_sub"><input type="checkbox">namesub</li>
+				<li class="name_sub"><input type="checkbox">namesub</li>
+			</ul>
+		</li>
+		<li class="list_sub"><span class="pwcname"><input type="checkbox">pwcname</span>
+			<ul class="pwcname">
+				<li class="name_sub"><input type="checkbox">namesub</li>
+				<li class="name_sub"><input type="checkbox">namesub</li>
+				<li class="name_sub"><input type="checkbox">namesub</li>
+			</ul>
+		</li>
+	</ul>
+
+	<button class="submit">Click me</button>
+
+</div>
+
+<script type="text/javascript" src="js/jquery.1.7.2.min.js"></script>
+<script type="text/javascript">
+	$.ajax({
+            url:'http://mdms.npc.com.vn/mdms2015/apis/equipments.php',
+            type:"POST",
+            data:{id:34, token:1},
+            success:function(data){
+            	var data = JSON.parse(data);
+                console.log(data);
+                //alert(data); return false;
+                var html = '';
+                $.each(data, function(index, val){
+                	var inner = '';
+                	var idpc = val[0];
+                	$.each(val[2], function(index1, val1){
+                        var inn = '';
+                        $.each(val1['meterinfo'], function(index2, val2){
+                            console.log(val2['serial_meter']);
+                            inn+='<li class="name_meter"><input class = "name_sub1" type="checkbox">'+val2['serial_meter']+'</li>';
+                        });
+
+                		inner+='<li class="name_sub"><input data-idpc="'+idpc+'" data-id="'+val1['id_sub']+'" class = "name_sub1" type="checkbox">'+val1['name_sub']+'<ul>'+inn+'</ul></li>';
+                	});
+                	html+=	'<li class="list_sub" ><input data-id="'+val[0]+'" class = "pwcnamei" type="checkbox"><span class="pwcname1">'+val[1]+'</span>'+
+								'<ul class="pwcname">'+
+									inner+
+								'</ul>'+
+							'</li>';
+                });
+                
+                $('.list_pwc').html(html);
+
+
+            },
+            error: function(e){
+                console.log('e '+e);
+            }
+        	
+        	
+        }); 
+</script>
+</body>
+</html>
