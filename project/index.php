@@ -22,9 +22,6 @@ if($page==''||$page==null){$page= 'login';}
 		case 'login':
 		loadpage($page);
 		break;
-		case 'home':
-		loadpage($page);
-		break;
 		case 'doxa':
 		loadpage($page);
 		break;

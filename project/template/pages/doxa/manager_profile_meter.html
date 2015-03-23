@@ -1,0 +1,257 @@
+
+        <div class="container">
+
+          <!-- Today status ends -->
+					<!-- Date Picker -->
+		<div class="row">
+            <div class="col-md-4">			
+					<h4>Date Picker</h4>
+					 <div id="datetimepicker1" class="input-append input-group dtpicker">
+						<input data-format="yyyy-MM-dd" type="text" class="form-control">
+						<span class="input-group-addon add-on">
+							<i data-time-icon="fa fa-times" data-date-icon="fa fa-calendar"></i>
+						</span>
+					</div>
+			</div>		
+			<div class="col-md-4">	
+					<h4>Date Picker</h4>
+					 <div id="datetimepicker3" class="input-append input-group dtpicker">
+						<input data-format="yyyy-MM-dd" type="text" class="form-control">
+						<span class="input-group-addon add-on">
+							<i data-time-icon="fa fa-times" data-date-icon="fa fa-calendar"></i>
+						</span>
+					</div>
+					<hr />
+			</div>			
+		</div>			
+          <!-- Dashboard Graph starts -->
+          <div class="row">
+            <div class="col-md-12">
+
+              <!-- Widget -->
+              <div class="widget">
+                <!-- Widget head -->
+                <div class="widget-head">
+                  <div class="pull-left">Biểu đồ dòng điện</div>
+                  <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                  </div>  
+                  <div class="clearfix"></div>
+                </div>              
+
+                <!-- Widget content -->
+                <div class="widget-content">
+					<div id="container" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+                </div>
+                <!-- Widget ends -->
+
+              </div>
+            </div>
+          </div>
+          <!-- Dashboard graph ends -->
+
+          <!-- Chats, File upload and Recent Comments -->
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="widget">
+                <div class="widget-head">
+                  <div class="pull-left">Data Tables</div>
+                  <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                  </div>  
+                  <div class="clearfix"></div>
+                </div>
+                <div class="widget-content">
+                  <div class="padd">
+                    
+							<!-- Table Page -->
+							<div class="page-tables">
+								<!-- Table -->
+								<div class="table-responsive">
+									<table cellpadding="0" cellspacing="0" border="0" id="data-table-1" width="100%">
+										<thead>
+											<tr>
+												<th>Rendering engine</th>
+												<th>Browser</th>
+												<th>Platform(s)</th>
+												<th>Engine version</th>
+												<th>CSS grade</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Trident</td>
+												<td>Internet Explorer 4.0</td>
+												<td>Win 95+</td>
+												<td> 4</td>
+												<td>X</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th>Rendering engine</th>
+												<th>Browser</th>
+												<th>Platform(s)</th>
+												<th>Engine version</th>
+												<th>CSS grade</th>
+											</tr>
+										</tfoot>
+									</table>
+									<div class="clearfix"></div>
+								</div>
+								</div>
+							</div>
+
+					
+                  </div>
+                  <div class="widget-foot">
+                    <!-- Footer goes here -->
+                  </div>
+                </div>
+              </div>  
+              
+    </div>
+
+
+<!-- Content ends -->
+
+<!-- Menu left + content Page 1 -->
+<script>
+    api_link='http://mdms.npc.com.vn/mdms2015/apis'      
+	  
+		  
+	var page1_meter = function(id_sub){
+	
+		$.ajax({
+            url:api_link+'/page1_meter.php',
+            type:"POST",
+            data:{id_sub: id_sub},
+            success:function(data){
+			console.log(data);
+               	$('.page1_meter').html('');
+				 if (data !=0){
+                    var meter = JSON.parse(data);
+					var i= 0;
+					$.each(meter, function(index, value){
+					
+					                
+						$('.page1_meter').append('<li><div class="datas-text" id="meter'+i+'"><img src="img/meter.png" style="padding-right: 5px;"></img>'+ value['serial_meter']+'</div> </li>'); 
+						i++;
+					});
+						//alert($("#meter0").text());
+						chart($("#meter0").text());
+					$(".page1_meter > li").click(function(){
+						//alert($(this).text());
+						chart($(this).text());
+					});
+				
+                } else {
+                    
+                }
+             }, error: function(e){
+                console.log('e '+e);
+            }
+        
+        }); 
+	}	  
+
+var chart = function(serial){
+	//serial = '50817696';
+	dt =[], dt0 =[], dt1 =[];
+	$.ajax({
+            url:api_link+'/page1_meter_chart.php',
+            type:"POST",
+            data:{serial: serial},
+            success:function(data){
+				//alert (data);
+				dt = JSON.parse(data);
+				console.log('dttttttt',dt);
+		$('#container').highcharts({
+        xAxis: {
+		type: 'datetime',
+						tickInterval: 3600 * 300, // one hour
+						tickWidth: 0,
+						gridLineWidth: 1,
+
+     
+				},
+
+				series: [{
+					name: 'Ia',
+					data: dt[0]
+				},
+				{
+					name: 'Ib',
+					data: dt[1]
+				},
+				{
+					name: 'Ic',
+					data: dt[2]
+				}
+				]
+			});	
+			
+		$('#container_U').highcharts({
+        xAxis: {
+		type: 'datetime',
+						tickInterval: 3600 * 300, // one hour
+						tickWidth: 0,
+						gridLineWidth: 1,
+
+     
+				},
+
+				series: [{
+					name: 'Ia',
+					data: dt[0]
+				},
+				{
+					name: 'Ib',
+					data: dt[1]
+				},
+				{
+					name: 'Ic',
+					data: dt[2]
+				}
+				]
+			});	
+			
+			$('#container_I').highcharts({
+        xAxis: {
+		type: 'datetime',
+						tickInterval: 3600 * 300, // one hour
+						tickWidth: 0,
+						gridLineWidth: 1,
+
+     
+				},
+
+				series: [{
+					name: 'Ia',
+					data: dt[0]
+				},
+				{
+					name: 'Ib',
+					data: dt[1]
+				},
+				{
+					name: 'Ic',
+					data: dt[2]
+				}
+				]
+			});	
+			
+			
+				
+            }, error: function(e){
+                console.log('e '+e);
+            }
+        
+        }); 
+}
+	
+
+</script>

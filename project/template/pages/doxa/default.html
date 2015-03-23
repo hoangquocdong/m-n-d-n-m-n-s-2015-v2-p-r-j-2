@@ -44,6 +44,12 @@
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="img/favicon/favicon.png">
+
+  <style>
+  .navbar-nav a {
+    cursor: pointer;
+  }
+  </style>
 </head>
 
 <body>
@@ -74,9 +80,9 @@
             <ul class="dropdown-menu">
               <li>
                 <!-- Using "icon-spin" class to rotate icon. -->
-                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span> <a href="index.html">Các điểm trên hệ thống đo xa</a></p>
+                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span> <a href="index.php?page=doxa">Các điểm trên hệ thống đo xa</a></p>
                 <hr />
-				<p><span class="label label-warning" ><i class="fa fa-cloud"></i></span> <a href="manager_alert_meter.html">Các thông báo cảnh báo</a></p>
+				<p><span class="label label-warning" ><i class="fa fa-cloud"></i></span> <a class="doxa"href="#">Các thông báo cảnh báo</a></p>
                 <hr />
                 <!-- Dropdown menu footer -->
                 <div class="drop-foot">
@@ -93,11 +99,11 @@
             <ul class="dropdown-menu">
               <li>
                 <!-- Using "icon-spin" class to rotate icon. -->
-                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span> <a class="manager_instant_meter">Thông số vận hành (15 phút)</a></p>
+                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span> <a class="doxa manager_instant_meter">Thông số vận hành (15 phút)</a></p>
                 <hr />
-				<p><span class="label label-warning" ><i class="fa fa-cloud"></i></span> <a href="manager_profile_meter.html">Thông số phụ tải(30 phút)</a></p>
+				<p><span class="label label-warning" ><i class="fa fa-cloud"></i></span> <a class="doxa manager_profile_meter">Thông số phụ tải(30 phút)</a></p>
                 <hr />
-                <p><span class="label label-warning" ><i class="fa fa-cloud"></i></span><a href="manager_current_meter.html"> Thông số chỉ số (60 phút) </a></p>				
+                <p><span class="label label-warning" ><i class="fa fa-cloud"></i></span><a class="doxa manager_current_meter"> Thông số chỉ số (60 phút) </a></p>				
                 <hr />
 
                 <!-- Dropdown menu footer -->
@@ -115,11 +121,11 @@
             <ul class="dropdown-menu">
               <li>
                 <!-- Using "icon-spin" class to rotate icon. -->
-                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span><a href="manager_h1_meter.html"> Chỉ số chốt tháng </a> </p>
+                <p><span class="label label-info" ><i class="fa fa-cloud"></i></span><a class="doxa manager_h1_meter"> Chỉ số chốt tháng </a> </p>
                 <hr />
-				<p><span class="label label-warning"><i class="fa fa-cloud"></i></span><a href="manager_sum_h1_meter.html"> Tổng hợp </a></p>
+				<p><span class="label label-warning"><i class="fa fa-cloud"></i></span><a class="doxa manager_sum_h1_meter"> Tổng hợp </a></p>
                 <hr />
-				<p><span class="label label-warning"><i class="fa fa-cloud"></i></span><a href="manager_price.html"> Giá mua bán điện </a></p>
+				<p><span class="label label-warning"><i class="fa fa-cloud"></i></span><a class="doxa manager_price"> Giá mua bán điện </a></p>
                 <hr />
                 <!-- Dropdown menu footer -->
                 <div class="drop-foot">
@@ -131,17 +137,17 @@
           </li>
 		  <!-- Sync to server link -->
           <li class="dropdown dropdown-big">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger"><i class="fa fa-refresh"></i></span> Quản lý nhà máy</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger"><i class="fa fa-folder-open-o"></i></span> Quản lý nhà máy</a>
             <!-- Dropdown -->
             <ul class="dropdown-menu">
               <li>
                 <!-- Using "icon-spin" class to rotate icon. -->
-                <a href="manager_dataipp.html" style="padding:5px 0px;" href="manager_dataipp.html"><span class="label label-info"  ><i class="fa fa-cloud"></i></span> Quản lý thông tin nhà máy</a>
+                <a style="padding:5px 0px;" class="qlnm manager_dataipp"><span class="label label-sub-3"  ><i class="fa fa-file-text-o"></i></span> Quản lý thông tin nhà máy</a>
                 <hr />
-                <a href="manager_equipmentipp.html" style="padding: 5px 0px;" href="manager_equipmentipp.html" ><span class="label label-warning"><i class="fa fa-cloud"></i></span> Quản lý thiết bị đo lường</a>
+                <a style="padding: 5px 0px;" class="qlnm manager_equipmentipp" ><span class="label label-sub-3"><i class="fa fa-file-text-o"></i></span> Quản lý thiết bị đo lường</a>
                 <hr />
-				<a href="manager_fileipp.html" style="padding:5px 0px;" href="manager_fileipp.html"><span class="label label-warning"><i class="fa fa-cloud"></i></span> Quản lý hồ sơ nhà máy</a>
-				 <hr />
+        <a style="padding:5px 0px;" class="qlnm manager_fileipp"><span class="label label-sub-3"><i class="fa fa-file-text-o"></i></span> Quản lý hồ sơ nhà máy</a>
+         <hr />
                 <!-- Dropdown menu footer -->
                 <div class="drop-foot">
                   <a href="#">View All</a>
@@ -606,11 +612,56 @@
 <!-- Menu left + content Page 1 -->
 <script>
 
-      $('.manager_instant_meter').click(function(){
-          $('.matter').load("<?php echo $page_template_path; ?>/manager_instant_meter.html");
-          //alert('1');
+      $('.navbar-nav a').click(function(){
+          var path = '';
+          if ($(this).hasClass('manager_instant_meter')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_instant_meter.html";
+
+          } else if ($(this).hasClass('manager_profile_meter')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_profile_meter.html";
+
+          } else if ($(this).hasClass('manager_current_meter')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_current_meter.html";
+
+          } else if ($(this).hasClass('manager_h1_meter')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_h1_meter.html";
+
+          } else if ($(this).hasClass('manager_sum_h1_meter')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_sum_h1_meter.html";
+
+          } else if ($(this).hasClass('manager_price')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_price.html";
+
+          } else if ($(this).hasClass('manager_dataipp')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_dataipp.html";
+
+          } else if ($(this).hasClass('manager_equipmentipp')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_equipmentipp.html";
+
+          } else if ($(this).hasClass('manager_fileipp')){ 
+
+              path = "<?php echo $page_template_path; ?>/manager_fileipp.html";
+          }
+
+          if (path != ''){ 
+            if ($(this).hasClass('doxa')){
+              $('.sidebar').css('visibility','visible');
+              $('.mainbar').css('margin-left','230px');
+            } else if ($(this).hasClass('qlnm')) {
+              $('.sidebar').css('visibility','hidden');
+              $('.mainbar').css('margin-left','0px');
+            }
+            $('.matter').load(path); }
+
       });
-      //alert('<?php echo json_encode($menuleft); ?>');
 
       setInterval(function(){ checknnoline(<?php echo $userid; ?>, "<?php echo $token; ?>");}, 60000);
 
